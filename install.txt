@@ -1,0 +1,165 @@
+1.安装依赖（按自己的需要安装）
+npm install webpack webpack-dev-server webpack-hot-middleware babel-cli babel-loader babel-core babel-preset-es2015 babel-preset-react babel-preset-stage-0 babel-preset-react-hmre css-loader style-loader react react-dom react-router express express-controller eslint eslint-plugin-react --save-dev
+
+还有些需要了解的工具：
+1、ESLint 用于静态检查代码的语法和风格 
+2、Mocha 则是一个测试框架，如果需要执行使用ES6语法的测试脚本，可以修改package.json的scripts.test。
+"scripts": {
+  "test": "mocha --ui qunit --compilers js:babel-core/register"
+}
+上面命令中，--compilers参数指定脚本的转码器，规定后缀名为js的文件，都需要使用babel-core/register先转码。
+
+
+2.搭结构
+webpackexpress
+ |-client
+ 	|--src
+ 		|---static
+ 			|----css
+ 			|----images
+ 		|---commponents
+ 			|----*.js
+ 		|---index.html
+ 		|---index.js
+ 	|--dist                 *打包生成的文件夹
+ 		|---*.html
+ 		|---*.js
+ 	|--webpack.config.js
+ 	|--webpack.production.config.js
+
+ |-server
+ 	|--application
+ 		|---controllers
+ 			|----*.js
+ 		|---models
+ 			|----*.js
+ 		|---views
+ 			|----*.html
+ 	|--config
+ 	|--core
+
+ |-server.js
+ |-package.json
+
+ 3.写webpack.config文件（开发环境的配置文件）
+ 注意点：（目前我自己还比较陌生的点做个记录）
+	 1> html-webpack-plugin  一个自动生成html文件的插件
+
+	 2> webpack-dev-middleware  为了和express搭配使用，需要引入这个中间件
+
+	 3> webpack-hot-middleware 	
+	 	热替换的插件，可以做到修改文件实时更新到浏览器中，实时看到效果，棒！
+	 	 output下 要加'webpack-hot-middleware/client?reload=true'
+		 plugins里面多三行内容：
+		 new webpack.optimize.OccurenceOrderPlugin(),
+	     new webpack.HotModuleReplacementPlugin(),
+	     new webpack.NoErrorsPlugin()
+
+	 4> 启用sourcemap（因为合并后的代码不利于排错和定位） 所以添加 devtool:'eval-source-map'
+
+	 5> loaders 
+	 	module:{
+			loaders:[{
+				test: /\.jsx?$/,
+				exclude: /node_modules/,
+				loader: 'babel',
+				query: {
+					//设定转码规则 ES2015转码规则 react转码规则 ES7不同阶段语法提案的转码规则（共有4个阶段），选装一个
+					'presets': ['react', 'es2015', 'stage-0', 'react-hmre']
+				}
+			},
+			{
+				test: /\.json?$/,
+	        	loader: 'json'
+			},
+			{
+				test: /\.css$/,
+				loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]'
+			}]
+		}
+
+		上面babel-loader的设置里面添加了React Transform支持（react-hmre）
+		这个preset里面其实包括两方面的东西：
+		· react-transform-hmr 用来实现热加载。
+		· react-transform-catch-errors 用来捕获render里面的方法，并且直接展示在界面上。
+
+		这里补充一点babel相关的知识点：
+		babel-cli: 用于命令行转码，装了这个就可以输入命令行将js文件转码，
+				   比如：babel example.js --out-file compiled.js 
+				   		(将转码文件写入一个文件,--out-file 或 -o 参数指定输出文件)
+
+		babel-core: 如果某些代码需要调用Babel的API进行转码，就要使用babel-core模块。
+		（应该比较少用到吧，目前看过的例子中没有看到过，要了解的话再看一下阮一峰的教程http://www.ruanyifeng.com/blog/2016/01/babel.html）
+
+	 6> 添加一个resolve的参数，把jsx这种扩展名添加进去，这样就可以在js中import加载jsx这种扩展名的脚本
+	  ...
+	  resolve: {
+	      extensions: ['', '.js', '.jsx']
+	  },
+	  ...
+
+4. 写server.js
+	1> 注意一下webpack-dev-middleware的用法，webpackMiddleware详细的配置参数，去看一下
+		http://webpack.github.io/docs/webpack-dev-middleware.html#middleware-invalidate
+		
+		下面看代码：
+		...
+		//先调入webpack配置文件
+		const config = require('./client/webpack.config.js');
+		...
+		const middleware = webpackMiddleware(webpack(config), {
+			publicPath: config.output.publicPath,
+			//stats里面配置的是一些在控制台（输命令行的地方）输出的代码
+			stats: {
+				colors: true,
+			    hash: false,
+			    timings: true,
+			    chunks: false,
+			    chunkModules: false,
+			    modules: false
+			}
+		})
+		app.use(middleware);
+
+	2> 注意一下webpackHotMiddleware用法，很简单，我们这里一句话就搞定了
+		...
+		//先调入webpack配置文件
+		const config = require('./client/webpack.config.js');
+		app.use(webpackHotMiddleware(webpack(config)));
+
+5. 写webpack.production.config.js，生产环境webpack配置文件
+ 注意点：（目前我自己还比较陌生的点做个记录）
+ 	1> extract-text-webpack-plugin 用于独立打包样式文件，就是分离css文件（希望样式通过 <link> 引入，而不是放在 <style> 标签内，虽然多一次请求，但是js文件过大好。）
+ 		在plugins中：new ExtractTextPlugin('[name]-[hash].min.css')
+ 		在module loaders 中： {
+            test:/\.css$/,
+            loader: ExtractTextPlugin.extract('style', 'css!modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
+        }
+
+ 	2> stats-webpack-plugin 暂时不知道干嘛用，暂时先写上去，猜测是生成打包状态的json文件
+
+ 	3> 打包的时候要带上node的环境设置
+ 	NODE_ENV=production webpack --config webpack.production.config.js --progress
+
+ 	4> autoprefixer 和 postcss 是一起使用的，自动在css中加浏览器前缀
+
+ 	5> UglifyJsPlugin  压缩代码
+
+
+6.webpack 运行
+	$ webpack --display-error-details --display-error-details是推荐加上的，方便出错时能查阅更详尽的信息（比如 webpack 寻找模块的过程），从而更好定位到问题。
+	$ webpack --config XXX.js //使用另一份配置文件（比如webpack.config2.js）来打包
+	$ webpack --watch //监听变动并自动打包
+	$ webpack -p//压缩混淆脚本，这个非常非常重要！
+	$ webpack -d//生成map映射文件，告知哪些模块被最终打包到哪里了
+	其中的 -p 是很重要的参数，曾经一个未压缩的 700kb 的文件，压缩后直接降到 180kb （主要是样式这块一句就独占一行脚本，导致未压缩脚本变得很大）
+
+	$ webpack --progress 显示编译进度
+	$ webpack --colors 显示静态资源的颜色
+	$ webpack --profile 输出性能数据，可以看到每一步的耗时
+
+7.cross-env 解决跨平台设置NODE_ENV问题
+	安装across-env:npm install cross-env --save-dev
+	在NODE_ENV=xxxxxxx前面添加cross-env就可以了。
+
+8. rimraf dist  不知道是什么命令 好像是清除什么东西 先删除
