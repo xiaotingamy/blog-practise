@@ -163,3 +163,28 @@ webpackexpress
 	在NODE_ENV=xxxxxxx前面添加cross-env就可以了。
 
 8. rimraf dist  不知道是什么命令 好像是清除什么东西 先删除
+
+9.
+
+Before running your app, you can do this in console,
+
+export NODE_ENV=production
+Or if you are in windows you could try this:
+
+SET NODE_ENV=production
+or you can run your app like this:
+
+NODE_ENV=production node app.js
+You can also set it in your js file:
+
+process.env.NODE_ENV = 'production';
+But I don't suggest to do it in your runtime file, since it's not easy to open up VIM in your server and change it to production. You can make a config.json file in your directory and everytime your app runs, it reads from it and sets the configuration.
+
+
+10.如果你确实想在React组件里使用jQuery，那么你可以先 npm install jquery --save 然后在组件 jsx 里使用 import $ from 'jquery' 。这样就可以使用了。但是不建议使用jQuery，一来jQuery体量太大，二来写写原生JavaScript也是很好的，三来现在也有很多小的包可以替代jQuery的部分功能，比如ajax功能就可以使用superagent。至于取DOM，就尽量按照React的DOM机制来取了，比如说REF或者给DOM绑定事件，然后用 e.target 来取。方法很多，不要依赖jQuery~~
+
+
+
+
+
+

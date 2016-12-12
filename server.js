@@ -19,10 +19,11 @@ const app = express();
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: false}));
 
-// curl请求api
+//curl请求api
 request = require('request');
 app.use(compression());
 
+root = __dirname;
 config = require('./server/core/Config');
 model = require('./server/core/Model');
 app.use(router);
@@ -31,7 +32,7 @@ client = config.load("client");
 if (isDeveloping) {
 	const compiler = webpack(webpackconfig);
 	const middleware = webpackMiddleware(compiler, {
-		publicPath: config.output.publicPath,
+		publicPath: webpackconfig.output.publicPath,
 		stats: {
 			colors: true,
 		    hash: false,

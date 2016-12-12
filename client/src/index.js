@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/App.js'
+// import App from './components/App.js'
+import LoginBox from './components/LoginBox';
 
 ReactDOM.render(
-	<App/>,
+	<LoginBox url='/user/login' />,
 	document.getElementById('app'));
