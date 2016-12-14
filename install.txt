@@ -232,5 +232,33 @@ Promise.reject(new Error("BOOM!")).catch(function(error){
     console.error(error);
 });
 
+Promise对象先理解到这里~
+
+开始写在登录页中的fetch例子：
+function status(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  }
+  throw new Error(response.statusText)
+}
+
+function json(response) {
+  return response.json()
+}
+
+var req = newRequest(this.props.url, {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/x-www-form-urlencoded'
+	}
+})
+fetch('/user')
+  .then(status)
+  .then(json)
+  .then(function(json) {
+    console.log('request succeeded with json response', json)
+  }).catch(function(error) {
+    console.log('request failed', error)
+  })
 
 
