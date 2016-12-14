@@ -164,27 +164,73 @@ webpackexpress
 
 8. rimraf dist  不知道是什么命令 好像是清除什么东西 先删除
 
-9.
+9. 运行生产环境
+	Before running your app, you can do this in console,
 
-Before running your app, you can do this in console,
+	export NODE_ENV=production
+	Or if you are in windows you could try this:
 
-export NODE_ENV=production
-Or if you are in windows you could try this:
+	SET NODE_ENV=production
+	or you can run your app like this:
 
-SET NODE_ENV=production
-or you can run your app like this:
+	NODE_ENV=production node app.js
+	You can also set it in your js file:
 
-NODE_ENV=production node app.js
-You can also set it in your js file:
-
-process.env.NODE_ENV = 'production';
-But I don't suggest to do it in your runtime file, since it's not easy to open up VIM in your server and change it to production. You can make a config.json file in your directory and everytime your app runs, it reads from it and sets the configuration.
-
-
-10.如果你确实想在React组件里使用jQuery，那么你可以先 npm install jquery --save 然后在组件 jsx 里使用 import $ from 'jquery' 。这样就可以使用了。但是不建议使用jQuery，一来jQuery体量太大，二来写写原生JavaScript也是很好的，三来现在也有很多小的包可以替代jQuery的部分功能，比如ajax功能就可以使用superagent。至于取DOM，就尽量按照React的DOM机制来取了，比如说REF或者给DOM绑定事件，然后用 e.target 来取。方法很多，不要依赖jQuery~~
+	process.env.NODE_ENV = 'production';
+	But I don't suggest to do it in your runtime file, since it's not easy to open up VIM in your server and change it to production. You can make a config.json file in your directory and everytime your app runs, it reads from it and sets the configuration.
 
 
+10. 如果你确实想在React组件里使用jQuery，那么你可以先 npm install jquery --save 然后在组件 jsx 里使用 import $ from 'jquery' 。这样就可以使用了。但是不建议使用jQuery，一来jQuery体量太大，二来写写原生JavaScript也是很好的，三来现在也有很多小的包可以替代jQuery的部分功能，比如ajax功能就可以使用superagent。至于取DOM，就尽量按照React的DOM机制来取了，比如说REF或者给DOM绑定事件，然后用 e.target 来取。方法很多，不要依赖jQuery~~
 
+还要学习一下用fetch来请求获取数据
+
+首先我们了解一下Promise对象
+
+Promise将类似异步处理对象和处理规则进行规范化，并按照采用统一的接口来编写。
+
+先学一下创建一个Promise对象， 用new关键字 实例化一个Promise对象
+
+var promise = new Promise(function(reslove,reject){
+	//异步处理
+	//异步处理结束后，调用reslove或者reject方法
+})
+
+对通过new生成的Promise对象为了设置状态在成功和失败时调用的回调函数，
+简而言之，就是设置回调函数！用promise.then() then方法。
+promise.then(onFulfilled, onRejected) 两个参数都可选
+成功时，onFulfilled会被调用
+失败时，onRejected会被调用
+只想对失败时进行处理的话采用promise.then(undefined, onRejected),也可以直接用promise.catch(onRejected)
+
+Promise对象的静态方法 Promise.all() Promise.race()  Promise.resolve() 
+
+
+Promise.resolve(value) 是new Promise()的快捷方式
+Promise.resolve(42)
+相当于下面的代码
+new Promise(function(resolve){
+	resolve(42)
+})
+
+Promise.resolve方法
+有一个作用就是将thenable对象转换为promise对象，它的作用就是将传递给它的参数（Fulfilled）填充到Promise对象后并返回这个Promise对象
+
+thenable是指一个具有.then方法的对象
+
+这种将thenable对象转换为promise对象的机制要求thenable对象所拥有的 then 方法应该和Promise所拥有的 then 方法具有同样的功能和处理过程，在将thenable对象转换为promise对象的时候，还会巧妙的利用thenable对象原来具有的 then 方法。
+
+比如$.ajax返回值就是一个thenable的，拥有.then方法的对象。
+var promise = Promise.resolve($.ajax('/json/comment.json')); //=>promise对象
+promise.then(function(value){
+	console.log(value);
+})
+
+Promise.reject方法
+和Promise.resolve方法类似（也是new Promise的快捷方式），不同之处在于promise内调用的函数时reject而不是resolve
+
+Promise.reject(new Error("BOOM!")).catch(function(error){
+    console.error(error);
+});
 
 
 
