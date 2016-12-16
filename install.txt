@@ -14,7 +14,7 @@ npm install webpack webpack-dev-server webpack-hot-middleware babel-cli babel-lo
 webpackexpress
  |-client
  	|--src
- 		|---static
+ 		|---static          *各个组件需要的独立的静态样式
  			|----css
  			|----images
  		|---commponents
@@ -22,6 +22,9 @@ webpackexpress
  		|---index.html
  		|---index.js
  	|--dist                 *打包生成的文件夹
+ 		|---static          *全局的静态文件
+ 			|----css
+ 			|----images
  		|---*.html
  		|---*.js
  	|--webpack.config.js
@@ -234,7 +237,7 @@ Promise.reject(new Error("BOOM!")).catch(function(error){
 
 Promise对象先理解到这里~
 
-开始写在登录页中的fetch例子：
+写在登录页中的fetch例子：
 function status(response) {
   if (response.status >= 200 && response.status < 300) {
     return response
@@ -250,9 +253,10 @@ var req = newRequest(this.props.url, {
 	method: 'POST',
 	headers: {
 		'Content-Type': 'application/x-www-form-urlencoded'
-	}
+	},
+	body: 'username=bar&password=123456'
 })
-fetch('/user')
+fetch(req)
   .then(status)
   .then(json)
   .then(function(json) {

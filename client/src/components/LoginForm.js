@@ -1,4 +1,5 @@
 import React from  'react'
+import style from '../static/css/login.css'
 
 export default React.createClass( {
     getInitialState() {
@@ -34,7 +35,7 @@ export default React.createClass( {
     },
     render() {
         return (
-            <form className="loginform" onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
                 <div className="list-block inset">
                     <ul>
                         <li>

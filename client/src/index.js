@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// import App from './components/App.js'
-import LoginBox from './components/LoginBox';
+import {Router,browserHistory} from 'react-router'
+
+import routes from './routes'
+// import history from './history'
 
 ReactDOM.render(
-	<LoginBox url='/user/login' />,
+	<Router history={browserHistory} routes={routes} />,
 	document.getElementById('app'));

@@ -44,6 +44,7 @@ if (isDeveloping) {
 	})
 	app.use(middleware);
 	app.use(webpackHotMiddleware(compiler));
+	app.use(express.static(__dirname + '/client/dist'));
 	app.get('*', function response(req, res){
 		res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'client/dist/index.html')));
 		res.end();
@@ -69,6 +70,6 @@ app.listen(port, function onStart(err){
 	if(err) {
 		console.log(err)
 	} else {
-	    console.info('==> Listening on port %s. Open up http://0.0.0.0:%s/ in your browser.', port, port);
+	    console.info('==> Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port);
 	}
 })

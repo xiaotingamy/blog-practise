@@ -1,0 +1,8 @@
+.bloglogo {
+	width: 3.75rem;
+	height: 3.75rem;
+	margin: 2.0rem auto;
+	border-radius: 50%;
+	background: url(../images/logo.png) no-repeat;
+	background-size: 3.75rem; 
+}
