@@ -2,13 +2,7 @@ import React from 'react'
 import {Link} from 'react-router'
 import auth from './Auth'
 
-class App extends React.Component {
-	constructor(props) {
-	    super(props);
-	    this.state = { 
-	    	/* initial state, this is ES6 syntax (classes) */ 
-		};
-  	}
+export default React.createClass({
 	render() {
         return (
             <div className="page-group">
@@ -32,5 +26,4 @@ class App extends React.Component {
             </div>
         )
     }
-}
-export default App
+});

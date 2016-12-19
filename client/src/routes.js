@@ -3,6 +3,8 @@ import {Route,IndexRoute} from 'react-router'
 
 import App from './components/App'
 import LoginBox from './components/LoginBox'
+import RegisterBox from './components/RegisterBox'
+import ForgetPassword from './components/ForgetPassword'
 import auth from './components/Auth'
 
 
@@ -31,6 +33,9 @@ var routes = (
 		<Route path="/" component={App} onEnter={requireAuth}></Route>
 		<Route path="/login" component={LoginBox}/>
 		<Route path="/logout" component={Logout}/>
+		<Route path="/register" component={RegisterBox}/>
+		<Route path="/forgetpsd" component={ForgetPassword}/>
+
     </div>
 );
 

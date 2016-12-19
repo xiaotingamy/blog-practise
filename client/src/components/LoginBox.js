@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route} from 'react-router'
+import {Route, Link} from 'react-router'
 import LoginForm from './LoginForm'
 import styles from '../static/css/login.css'
 
@@ -43,6 +43,11 @@ export default React.createClass( {
                 <div className="content">
                     <div className={styles.bloglogo}></div>
                     <LoginForm  onLoginSubmit={this.handleLoginSubmit}/>
+                    <div className={styles.extraLink}>
+                        <p><Link to="/forgetpsd">忘记密码？</Link></p>
+                        <p className="text-center">还没账号？去<Link to="/register">注册</Link></p>
+                    </div>
+                    
                 </div>
             </div>
         )

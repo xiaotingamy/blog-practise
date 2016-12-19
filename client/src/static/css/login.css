@@ -6,3 +6,12 @@
 	background: url(../images/logo.png) no-repeat;
 	background-size: 3.75rem; 
 }
+.extraLink {
+	display: flex;
+	justify-content: space-between;
+	margin: 0 0.75rem;
+}
+
+.extraLink p{
+	font-size: 0.7rem;
+}
