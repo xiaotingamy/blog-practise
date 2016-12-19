@@ -1,5 +1,5 @@
 import React from 'react'
-import {ReactRouter, Route,IndexRoute} from 'react-router'
+import {Route,IndexRoute} from 'react-router'
 
 import App from './components/App'
 import LoginBox from './components/LoginBox'

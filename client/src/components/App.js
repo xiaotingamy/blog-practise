@@ -9,9 +9,6 @@ class App extends React.Component {
 	    	/* initial state, this is ES6 syntax (classes) */ 
 		};
   	}
-	handleLogout(e) {
-		auth.logout()
-	}
 	render() {
         return (
             <div className="page-group">
@@ -29,7 +26,7 @@ class App extends React.Component {
                                 </Link>
                             </p>
                         </div>
-                        <p className="text-center" onClick={this.handleLogout} >退出登录</p>
+                        <p className="text-center"><Link className="a-link" to="/logout">退出登录</Link></p>
                     </div>
                 </div>
             </div>
