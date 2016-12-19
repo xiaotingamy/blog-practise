@@ -1,0 +1,38 @@
+/*.page,.page-group{background: #fff;}*/
+.page-home {
+	position: relative;
+	background-color: #571c94;
+	background-image: url(http://sui.taobao.org/sui/docs/assets/imgs/grid.png), -webkit-gradient(linear, left bottom, right top, color-stop(0%, #571c94), color-stop(100%, #e609cf));
+	background-image: url(http://sui.taobao.org/sui/docs/assets/imgs/grid.png), -webkit-linear-gradient(135deg, #571c94 0%, #e609cf 100%);
+	background-image: url(http://sui.taobao.org/sui/docs/assets/imgs/grid.png), -webkit-linear-gradient(315deg, #571c94 0%, #e609cf 100%);
+	background-image: url(http://sui.taobao.org/sui/docs/assets/imgs/grid.png), -o-linear-gradient(315deg, #571c94 0%, #e609cf 100%);
+	background-repeat: no-repeat;
+	background-position: 50% 40%;
+}
+
+.index-btns {
+	margin: 12rem auto;
+	width: 70%;
+}
+
+.button.button-white {
+	border: 1px solid #fff;
+	color: #fff
+}
+
+.button-full {
+	width: 100%;
+}
+
+.a-link {
+	color: #fff;
+}
+
+.signup {
+	color: #507daf;
+}
+
+.loginlinks {
+	margin: .75rem;
+	font-size: 0.8rem
+}
