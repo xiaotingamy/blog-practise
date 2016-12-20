@@ -7,6 +7,7 @@ import RegisterBox from './components/RegisterBox'
 import ForgetPassword from './components/ForgetPassword'
 import auth from './components/Auth'
 import ArticleBox from './components/ArticleBox'
+import ArticleEdit from './components/ArticleEdit'
 
 
 function requireAuth(nextState, replace) {
@@ -37,6 +38,7 @@ var routes = (
 		<Route path="/register" component={RegisterBox}/>
 		<Route path="/forgetpsd" component={ForgetPassword}/>
 		<Route path="/articles" component={ArticleBox} />
+		<Route path="/edit" component={ArticleEdit}/>
     </div>
 );
 
