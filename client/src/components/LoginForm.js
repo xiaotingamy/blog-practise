@@ -29,8 +29,8 @@ export default React.createClass( {
             $.toast('密码格式有误');
             return false;
         }
-        // this.props.onLoginSubmit({username: username, password: password});
-        this.props.onLoginSubmit('username='+username+'&password='+password);
+        this.props.onLoginSubmit({username: username, password: password});
+        // this.props.onLoginSubmit('username='+username+'&password='+password);
         // this.setState({username: '', password: ''});
     },
     render() {

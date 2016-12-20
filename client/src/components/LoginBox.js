@@ -3,17 +3,6 @@ import {Route, Link} from 'react-router'
 import LoginForm from './LoginForm'
 import styles from '../static/css/login.css'
 
-function status(response) {
-    if (response.status >= 200 && response.status <300) {
-        return response
-    }
-    throw new Error(response.statusText);
-}
-
-function json(response) {
-    return response.json()
-}
-
 export default React.createClass( {
     contextTypes: {
         router: React.PropTypes.object
@@ -47,7 +36,6 @@ export default React.createClass( {
                         <p><Link to="/forgetpsd">忘记密码？</Link></p>
                         <p className="text-center">还没账号？去<Link to="/register">注册</Link></p>
                     </div>
-                    
                 </div>
             </div>
         )

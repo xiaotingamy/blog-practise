@@ -10,12 +10,12 @@ export default React.createClass({
                     <div className="content">
                         <div className="content-block index-btns">
                             <p>
-                                <Link to="/write" className="button button-big button-round button-white">
+                                <Link to="/edit" className="button button-big button-round button-white">
                                     <span>写博客</span>
                                 </Link>
                             </p>
                             <p>
-                                <Link to="/list" className="button button-big button-round button-white">
+                                <Link to="/articles" className="button button-big button-round button-white">
                                     <span>博客列表</span>
                                 </Link>
                             </p>
