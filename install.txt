@@ -185,7 +185,7 @@ webpackexpress
 
 10. 如果你确实想在React组件里使用jQuery，那么你可以先 npm install jquery --save 然后在组件 jsx 里使用 import $ from 'jquery' 。这样就可以使用了。但是不建议使用jQuery，一来jQuery体量太大，二来写写原生JavaScript也是很好的，三来现在也有很多小的包可以替代jQuery的部分功能，比如ajax功能就可以使用superagent。至于取DOM，就尽量按照React的DOM机制来取了，比如说REF或者给DOM绑定事件，然后用 e.target 来取。方法很多，不要依赖jQuery~~
 
-还要学习一下用fetch来请求获取数据
+11. 学习一下用fetch来请求获取数据（替代ajax的一种方式）
 
 首先我们了解一下Promise对象
 
