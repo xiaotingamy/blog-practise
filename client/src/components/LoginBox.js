@@ -33,7 +33,7 @@ export default React.createClass( {
                     <div className={styles.bloglogo}></div>
                     <LoginForm  onLoginSubmit={this.handleLoginSubmit}/>
                     <div className={styles.extraLink}>
-                        <p><Link to="/forgetpsd">忘记密码？</Link></p>
+                        <p><Link to="/forgetpwd">忘记密码？</Link></p>
                         <p className="text-center">还没账号？去<Link to="/register">注册</Link></p>
                     </div>
                 </div>

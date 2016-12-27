@@ -40,6 +40,7 @@ export default React.createClass( {
                     <ul>
                         <li>
                             <div className="item-content">
+                                <div className="item-media"><i className="lnr lnr-user"></i></div>
                                 <div className="item-inner">
                                     <div className="item-input">
                                         <input type="text" placeholder="用户名/邮箱" name="username" value={this.state.username} onChange={this.handleUsernameChange}/>
@@ -49,6 +50,7 @@ export default React.createClass( {
                         </li>
                         <li>
                             <div className="item-content">
+                                <div className="item-media"><i className="lnr lnr-lock"></i></div>
                                 <div className="item-inner">
                                     <div className="item-input">
                                         <input type="password" placeholder="密码" maxLength="20" name="password"  value={this.state.password} onChange={this.handlePasswordChange}/>

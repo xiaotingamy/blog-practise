@@ -15,3 +15,8 @@
 .extraLink p{
 	font-size: 0.7rem;
 }
+
+.imgcaptcha {
+	width: 5.0rem;
+	height: 2.0rem;
+}
