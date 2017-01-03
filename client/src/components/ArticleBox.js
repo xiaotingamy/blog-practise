@@ -1,7 +1,20 @@
 import React from "react"
 import {Link} from "react-router"
+import InfiniteScroll from './InfiniteScroll'
+import qwest from 'qwest'
 
-var Article = React.createClass({
+// qwest.`method`(`url`, `data`, `options`, `before`)
+//      .then(function(xhr, response) {
+//         // Run when the request is successful
+//      })
+//      .catch(function(e, xhr, response) {
+//         // Process the error
+//      })
+//      .complete(function() {
+//         // Always run
+//      });
+
+class Article extends React.Component {
 	render() {
 		return (
 				<Link to={'/article/detail/'+ this.props.article.id}>
@@ -20,9 +33,9 @@ var Article = React.createClass({
                 </Link>
 			)
 	}
-})
+}
 
-var ArticleList = React.createClass({
+class ArticleList extends React.Component {
 	render() {
 		var items = [];
 		this.props.articles.forEach(function(article){
@@ -34,7 +47,7 @@ var ArticleList = React.createClass({
 				</div>
 			)
 	}
-})
+}
 
 var ARTICLES = [
 	{
@@ -60,16 +73,58 @@ var ARTICLES = [
 	}
 ]
 
-var ArticleBox = React.createClass({
+class ArticleBox extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			articles: [],
+			hasMoreItems: true
+		}
+	}
+	loadItems(page) {
+		var self = this;
+		// 请求文章列表的api
+		var url = '/list/' + page;
+
+		qwest.get(url)
+		.then((xhr,response) => {
+			if (response) {
+				var articles = self.state.articles;
+				response.articles.map((article) => {
+					articles.push(article)
+				})
+				//返回的数据中需要一个总页数，当前页等于总页数时就没有更多了  hasMoreItems为false
+				if(page < response.pages) {
+                    self.setState({
+                        articles: articles
+                    });
+                } else {
+                    self.setState({
+                        hasMoreItems: false
+                    });
+                }
+			}
+		})
+		.catch((e, xhr, response) => {
+			// Process the error
+		})
+	}
 	render() {
+		const loader = <div>Loading</div>;
 		return (
 			<div className="page-group">
         		<div className="page page-current">
-					<ArticleList articles={ARTICLES} />
+	        		<InfiniteScroll 
+					pageStart={0}
+	                loadMore={this.loadItems.bind(this)}
+					hasMore={this.state.hasMoreItems}
+					loader={loader}>
+						<ArticleList articles={this.state.articles} />
+					</InfiniteScroll>
 				</div>
 			</div>
 		)
 	}
-})
+}
 
 export default ArticleBox
