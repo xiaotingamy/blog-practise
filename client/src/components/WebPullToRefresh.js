@@ -1,7 +1,6 @@
-import Hammer from 'hammer.js' 
-
+import Hammer from 'hammerjs'
 export default function WebPullToRefresh() {
-	"use strict;"
+	'use strict';
 
 	var defaults = {
 		contentEl: 'content',
@@ -10,18 +9,18 @@ export default function WebPullToRefresh() {
 		distanceToRefresh: 70,
 		loadingFunction: false,
 		resistance: 2.5
-	}
+	};
 
-	var options = {}
+	var options = {};
 
-	// pan event parameters
+
 	var pan = {
 		enabled: false,
 		distance: 0,
 		startingPositionY: 0
-	}
+	};
 
-	// Easy shortener for handling adding and removing body classes.
+
 	var bodyClass = defaults.bodyEl.classList;
 
 	var init = function(params){
@@ -33,35 +32,40 @@ export default function WebPullToRefresh() {
 			distanceToRefresh: params.distanceToRefresh || defaults.distanceToRefresh,
 			loadingFunction: params.loadingFunction || defaults.loadingFunction,
 			resistance: params.resistance || defaults.resistance,
-			hammerOptions: params.hammerOptions || {}
+			hammerOptions: params.hammerOptions || {touchAction: 'auto'}
 		}
 
-		if( !options.contentEl || !options.ptrEl ) return false;
+		if( ! options.contentEl || ! options.ptrEl ) {
+			return false;
+		}
 
 		bodyClass = options.bodyEl.classList;
 
-		var h = new Hammer(options.contentEl, options.hammerOptions)
-		h.get('pan').set({direction: Hammer.DIRRCTION_VERTICAL});
+		// Hammer.defaults.touchAction = 'auto'; 
+		var h = new Hammer(options.contentEl, options.hammerOptions);
+
+		h.get('pan').set({direction: Hammer.DIRECTION_VERTICAL});
 
 		h.on('panstart', _panStart);
 		h.on('pandown', _panDown);
 		h.on('panup', _panUp);
 		h.on('panend', _panEnd);
-	}
+	};
 
 	var _panStart = function(e){
 		
-		pan.startingPositionY = pan.bodyEl.scrollTop;
+		pan.startingPositionY = options.bodyEl.scrollTop;
 
-		if (pan.startingPositionY == 0) {
-			pan.enable = true;
+		if (pan.startingPositionY === 0) {
+			pan.enabled = true;
 		}
-	}
+	};
 
 	var _panDown = function(e){
-		console.log(e.distance); //是触摸点拖动的过的距离
 
-		if (!pan.enable) return;
+		if (!pan.enabled) {
+			return;
+		}
 
 		e.preventDefault();
 
@@ -70,23 +74,26 @@ export default function WebPullToRefresh() {
 		_setContentPan();
 		_setBodyClass();
 
-	}
+	};
 
 	var _panUp = function(e){
-		if (!pan.enable) return;
+		if ( ! pan.enabled || pan.distance === 0 ) {
+			return;
+		}
+		e.preventDefault();
 		if (pan.distance < e.distance / options.resistance) {
-			pan.distance = 0
+			pan.distance = 0;
 		}else{
-			pan.distance = e.distance / options.resistance
+			pan.distance = e.distance / options.resistance;
 		}
 		_setContentPan();
 		_setBodyClass();
-	}
+	};
 
 	var _setContentPan = function(){
-		options.contentEl.style.transform = options.contentEl.style.webkitTransform = 'translate3d(0,' + pan.distance + ',0)';
-		options.ptrEl.style.transform = options.ptrEl.style.webkitTransform = 'translate3d(0,' + (pan.distance - options.ptrEl.offsetHeight) + ',0)';
-	}
+		options.contentEl.style.transform = options.contentEl.style.webkitTransform = 'translate3d(0,' + pan.distance + 'px,0)';
+		options.ptrEl.style.transform = options.ptrEl.style.webkitTransform = 'translate3d(0,' + (pan.distance - options.ptrEl.offsetHeight) + 'px,0)';
+	};
 
 	var _setBodyClass = function(){
 		if(pan.distance > options.distanceToRefresh) {
@@ -94,9 +101,11 @@ export default function WebPullToRefresh() {
 		}else{
 			bodyClass.remove('ptr-refresh');
 		}
-	}
+	};
 	var _panEnd = function(e){
-		if (!pan.enable) return;
+		if (!pan.enabled) {
+			return;
+		}
 		e.preventDefault();
 
 		options.contentEl.style.transform = options.contentEl.style.webkitTransform = '';
@@ -109,8 +118,8 @@ export default function WebPullToRefresh() {
 		}
 
 		pan.distance = 0;
-		pan.enable = false;
-	}
+		pan.enabled = false;
+	};
 
 	var _doLoading= function(){
 		bodyClass.add('ptr-loading');
@@ -120,9 +129,9 @@ export default function WebPullToRefresh() {
 		var loadingPromise = options.loadingFunction();
 
 		setTimeout(function(){
-			loadingPromise.then(_doReset)
-		},100)
-	}
+			loadingPromise.then(_doReset);
+		},100);
+	};
 
 	var _doReset = function(){
 		bodyClass.remove('ptr-loading');
@@ -132,7 +141,7 @@ export default function WebPullToRefresh() {
 		var bodyClassRemove = function() {
 			bodyClass.remove('ptr-reset');
 			options.bodyEl.removeEventListener('transitionend', bodyClassRemove, false);
-		}
+		};
 
 		options.bodyEl.addEventListener('transitionend', bodyClassRemove, false);
 		
@@ -142,7 +151,7 @@ export default function WebPullToRefresh() {
 		//useCapture 可选，布尔值，指定事件是否在捕获或者冒泡阶段执行
 		// 默认值是false，表示事件句柄在冒泡阶段执行
 		//          true，表示事件句柄在捕获阶段执行
-	}
+	};
 
 	return {
 		init: init

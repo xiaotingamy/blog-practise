@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Router,browserHistory} from 'react-router'
+// import {Router,browserHistory} from 'react-router'
 
-import routes from './routes'
+// import routes from './routes'
 
-import App from './components/TodoBox'
+import DemoItems from './components/DemoItems'
 
 ReactDOM.render(
 	// <Router history={browserHistory} routes={routes} />,
-	<App />,
+	<DemoItems />,
 	document.getElementById('app'));
