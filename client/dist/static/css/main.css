@@ -210,13 +210,16 @@
   margin: 0.4rem;
 }
 
-#app .ptr-element {
+/*#app .ptr-element {
   transform: translate3d(0, -50px, 0);
 }
-#app .ptr-loading .ptr-element {
+.ptr-loading #app .ptr-element {
   transform: translate3d(0, 0, 0);
+}*/
+body:not(.ptr-loading) #app .ptr-element {
+  transform: translate3d(0, -50px, 0);
 }
-
+/*
 .refresh-view{
   overflow: auto;
-}
+}*/
