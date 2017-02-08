@@ -15,7 +15,7 @@ export default class DemoItems extends React.Component {
 		let self = this;
 		setTimeout(function(){
 			self.addItem() ? resolve() : reject();
-		},300)
+		},1000)
 	}
 	addItem() {
 		this.state.items.push(<div key={'item-' + count}>Item {count++}</div>);

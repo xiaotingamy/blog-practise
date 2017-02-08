@@ -19,7 +19,8 @@ export default class ReactPullToRefresh extends Component {
 			WebPullToRefresh().init({
 				contentEl: this.refs.refresh,
 				ptrEl: this.refs.ptr,
-				bodyEl: this.refs.body,
+				bodyEl: document.body,
+				// bodyEl: this.refs.body,
 				distanceToRefresh: this.props.distanceToRefresh || undefined,
 				loadingFunction: this.handleRefresh,
 				resistance: this.props.resistance || undefined,
@@ -61,7 +62,7 @@ export default class ReactPullToRefresh extends Component {
 			);
 		}
 		return (
-				<div id="body" ref="body" {...rest}>
+				<div {...rest}>
 					<div ref="ptr" className="ptr-element">
 						{icon || <span className="genericon"></span>}
 						{loading || 
