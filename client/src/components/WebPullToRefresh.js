@@ -32,7 +32,7 @@ export default function WebPullToRefresh() {
 			distanceToRefresh: params.distanceToRefresh || defaults.distanceToRefresh,
 			loadingFunction: params.loadingFunction || defaults.loadingFunction,
 			resistance: params.resistance || defaults.resistance,
-			hammerOptions: params.hammerOptions || {touchAction: 'auto'}
+			hammerOptions: params.hammerOptions || {}
 		}
 
 		if( ! options.contentEl || ! options.ptrEl ) {

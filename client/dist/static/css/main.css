@@ -37,7 +37,13 @@
 	font-size: 0.8rem
 }
 
-@media screen and (min-width: 64em) {
+.no-margin{
+  margin: 0!important;
+}
+.ps-r {
+  position: relative;
+}
+/*@media screen and (min-width: 64em) {
   .tracks {
     display: flex;
     flex-wrap: wrap;
@@ -189,7 +195,7 @@
 }
 
 
-/* react-pull-to-refresh CSS */
+/* react-pull-to-refresh CSS 
 
 #app {
   background-color: #fff;
@@ -219,4 +225,4 @@
 
 .refresh-view{
   overflow: auto;
-}
+}*/

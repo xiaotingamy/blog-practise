@@ -2,19 +2,20 @@ import React from 'react'
 import styles from '../static/css/login.css'
 import ImgCaptcha from './ImgCaptcha'
 
-const ForgetPasswordForm = React.createClass({
-	getInitialState() {
-        return {
+class ForgetPasswordForm extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
             email: '',
             imgCaptcha: ''
         }
-    },
+    }
     handleEmailChange(e) {
         this.setState({email: e.target.value})
-    },
+    }
     handleImgCaptchaChange(e) {
         this.setState({imgCaptcha: e.target.value})
-    },
+    }
     handleSubmit(e) {
         e.preventDefault();
         var email = this.state.email.trim();
@@ -36,7 +37,8 @@ const ForgetPasswordForm = React.createClass({
         	return false;
         }
         this.props.onEmailSubmit({email: email, imgCaptcha: imgCaptcha });
-    },
+    }
+    
 	render(){
 		return (
 				<form onSubmit={this.handleSubmit}>
@@ -47,7 +49,7 @@ const ForgetPasswordForm = React.createClass({
                                     <div className="item-media"><i className="lnr lnr-envelope"></i></div>
                                     <div className="item-inner">
                                         <div className="item-input">
-                                            <input type="text" placeholder="请输入注册邮箱" name="email" value={this.state.email} onChange={this.handleEmailChange}/>
+                                            <input type="text" placeholder="请输入注册邮箱" name="email" value={this.state.email} onChange={this.handleEmailChange.bind(this)}/>
                                         </div>
                                     </div>
                                 </div>
@@ -57,9 +59,9 @@ const ForgetPasswordForm = React.createClass({
                                     <div className="item-media"><i className="lnr lnr-lock"></i></div>
 	                                <div className="item-inner">
 	                                    <div className="item-input">
-	                                        <input type="text" placeholder="请输入验证码" maxLength="4" name="imgCaptcha" value={this.state.imgCaptcha} onChange={this.handleImgCaptchaChange}/>
+	                                        <input type="text" placeholder="请输入验证码" maxLength="4" name="imgCaptcha" value={this.state.imgCaptcha} onChange={this.handleImgCaptchaChange.bind(this)}/>
 	                                    </div>
-	                                    <ImgCaptcha/>
+	                                    <ImgCaptcha />
 	                                </div>
 	                            </div>
 	                        </li>
@@ -71,9 +73,9 @@ const ForgetPasswordForm = React.createClass({
 	            </form>
 			)
 	}
-})
+}
 
-const ForgetPassword = React.createClass({
+class ForgetPassword extends React.Component{
 	// contextTypes: {
  //        router: React.PropTypes.object
  //    },
@@ -94,18 +96,18 @@ const ForgetPassword = React.createClass({
             }.bind(this),
             error: function (xhr, status, err) {
                 $.toast(err);
-            }.bind(this)
+            }
         })
-    },
+    }
 	render(){
 		return (
 				<div className="page-group page-current">
 	                <div className="content">
-	                    <ForgetPasswordForm  onEmailSubmit={this.handleEmailSubmit}/>
+	                    <ForgetPasswordForm  onEmailSubmit={this.handleEmailSubmit.bind(this)}/>
 	                </div>
 	            </div>
 			)
 	}
-})
+}
 
 export default ForgetPassword

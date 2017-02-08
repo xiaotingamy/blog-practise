@@ -74,53 +74,57 @@ var ARTICLES = [
 ]
 
 class ArticleBox extends React.Component{
-	constructor(props){
-		super(props);
-		this.state = {
-			articles: [],
-			hasMoreItems: true
-		}
-	}
-	loadItems(page) {
-		var self = this;
-		// 请求文章列表的api
-		var url = '/list/' + page;
+	// constructor(props){
+	// 	super(props);
+	// 	this.state = {
+	// 		articles: [],
+	// 		hasMoreItems: true
+	// 	}
+	// }
+	// loadItems(page) {
+	// 	var self = this;
+	// 	// 请求文章列表的api
+	// 	var url = '/list/' + page;
 
-		qwest.get(url)
-		.then((xhr,response) => {
-			if (response) {
-				var articles = self.state.articles;
-				response.articles.map((article) => {
-					articles.push(article)
-				})
-				//返回的数据中需要一个总页数，当前页等于总页数时就没有更多了  hasMoreItems为false
-				if(page < response.pages) {
-                    self.setState({
-                        articles: articles
-                    });
-                } else {
-                    self.setState({
-                        hasMoreItems: false
-                    });
-                }
-			}
-		})
-		.catch((e, xhr, response) => {
-			// Process the error
-		})
-	}
+	// 	qwest.get(url)
+	// 	.then((xhr,response) => {
+	// 		if (response) {
+	// 			var articles = self.state.articles;
+	// 			response.articles.map((article) => {
+	// 				articles.push(article)
+	// 			})
+	// 			//返回的数据中需要一个总页数，当前页等于总页数时就没有更多了  hasMoreItems为false
+	// 			if(page < response.pages) {
+ //                    self.setState({
+ //                        articles: articles
+ //                    });
+ //                } else {
+ //                    self.setState({
+ //                        hasMoreItems: false
+ //                    });
+ //                }
+	// 		}
+	// 	})
+	// 	.catch((e, xhr, response) => {
+	// 		// Process the error
+	// 	})
+	// }
+
+	// 滚动加载数据
+	// <InfiniteScroll 
+	// pageStart={0}
+ //    loadMore={this.loadItems.bind(this)}
+	// hasMore={this.state.hasMoreItems}
+	// loader={loader}>
+	// 	<ArticleList articles={this.state.articles} />
+	// </InfiniteScroll>
 	render() {
 		const loader = <div>Loading</div>;
 		return (
 			<div className="page-group">
         		<div className="page page-current">
-	        		<InfiniteScroll 
-					pageStart={0}
-	                loadMore={this.loadItems.bind(this)}
-					hasMore={this.state.hasMoreItems}
-					loader={loader}>
-						<ArticleList articles={this.state.articles} />
-					</InfiniteScroll>
+					
+					<ArticleList articles={ARTICLES}/>
 				</div>
 			</div>
 		)

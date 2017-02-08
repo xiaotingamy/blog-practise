@@ -12,7 +12,7 @@ class ImgCaptcha extends React.Component {
 	handleClick(e){
 		e.preventDefault();
 		this.setState({
-			imgUrl : 'http://ui.cn/code?'+Math.random()
+			imgUrl : 'http://ui.cn/code?' + Math.random()
 		})
 	}
 	render(){

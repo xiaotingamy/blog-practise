@@ -7,6 +7,12 @@ module.exports = {
             function (error, response, body) {
                 // 返回json数据
                 res.json(JSON.parse(body));
-            }).form({"grant_type":client.grant_type, "username":post.username, "password":post.password, "client_id":client.client_id, "scope":client.scope}).auth(client.client_id, client.client_secret, true);
+            }).form({
+            	"grant_type":client.grant_type, 
+            	"username":post.username, 
+            	"password":post.password, 
+            	"client_id":client.client_id, 
+            	"scope":client.scope
+            }).auth(client.client_id, client.client_secret, true);
     },
 }    

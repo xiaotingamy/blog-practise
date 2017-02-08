@@ -26,7 +26,7 @@ export default class DemoItems extends React.Component {
 	}
 	render() {
 		return (
-				<ReactPullToRefresh onRefresh={this.handleRefresh.bind(this)} style={{textAlign: 'center'}}>
+				<ReactPullToRefresh onRefresh={this.handleRefresh.bind(this)} hammerOptions={{touchAction: 'auto'}} style={{textAlign: 'center'}}>
 					<h3>pull to Refresh</h3>
 					<div>
 						{this.state.items}
