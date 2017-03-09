@@ -15,7 +15,7 @@ export default React.createClass({
                                 </Link>
                             </p>
                             <p>
-                                <Link to="/articles" className="button button-big button-round button-white">
+                                <Link to="/article/list" className="button button-big button-round button-white">
                                     <span>博客列表</span>
                                 </Link>
                             </p>

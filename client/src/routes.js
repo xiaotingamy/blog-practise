@@ -38,9 +38,9 @@ var routes = (
 		<Route path="/logout" component={Logout}/>
 		<Route path="/register" component={RegisterBox}/>
 		<Route path="/forgetpwd" component={ForgetPassword}/>
-		<Route path="/articles" component={ArticleBox} />
+		<Route path="/article/list" component={ArticleBox} />
 		<Route path="/edit" component={ArticleEdit}/>
-		<Route path="/article/detail/:articleId" component={ArticleDetail} />
+		<Route path="/article/info/:articleId" component={ArticleDetail} />
     </div>
 );
 

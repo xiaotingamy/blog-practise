@@ -104,7 +104,7 @@ export default class App extends React.Component{
 		}
 		this.setState({
 			todos: this.state.todos,
-			isAllChecked
+			isAllChecked: isAllChecked
 		})
 	}
 	addTodo(item){
@@ -117,6 +117,7 @@ export default class App extends React.Component{
 		this.setState({
 			todos: this.state.todos
 		});
+		this.allChecked();
 		this.db.set('todos',this.state.todos);
 	}
 	changeTodoState(index, isDone, isChangeAll=false){
@@ -140,6 +141,7 @@ export default class App extends React.Component{
 			todos: todos,
 			isAllChecked: false
 		});
+
 		this.db.set('todos',todos);
 	}
 	render() {

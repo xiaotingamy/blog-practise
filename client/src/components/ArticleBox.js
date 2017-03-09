@@ -48,32 +48,68 @@ class ArticleList extends React.Component {
 			)
 	}
 }
-
-var ARTICLES = [
-	{
-		id: 101, 
-		title: '这是第一篇文章', 
-		createTime: '2015-12-06 15:12:03', 
-		updateTime: '2015-12-12 14:23:00', 
-		content: '假设这个字段是文章正文，我是正文正文'
-	},
-	{
-		id: 102, 
-		title: '这是第二篇文章', 
-		createTime: '2016-12-06 15:02:03', 
-		updateTime: '2016-12-12 14:23:00', 
-		content: '假设这个字段是文章正文，我是第二篇的正文正文正文正文正文正文'
-	},
-	{
-		id: 103, 
-		title: '这是第三篇文章', 
-		createTime: '2016-12-06 15:02:03', 
-		updateTime: '2016-12-12 14:23:00', 
-		content: '假设这个字段是文章正文，我是第三篇的正文正文正文正文正文正文'
-	}
-]
-
 class ArticleBox extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			articles: [],
+			hasMoreItems: true
+		}
+	}
+	componentWillMount() {
+		$.ajax({
+			url: '/article/list',
+			type: 'post',
+            datatype: 'json',
+            data:{
+            	page: 1
+            },
+            success: function (data) {
+                console.log(data.code)
+            },
+            error: function (xhr, status, err) {
+                $.toast(err);
+            }
+		})
+	}
+	render() {
+		const loader = <div>Loading</div>;
+		return (
+			<div className="page-group">
+        		<div className="page page-current">
+					<ArticleList articles={this.state.articles}/>
+				</div>
+			</div>
+		)
+	}
+}
+export default ArticleBox
+
+// var ARTICLES = [
+// 	{
+// 		id: 101, 
+// 		title: '这是第一篇文章', 
+// 		createTime: '2015-12-06 15:12:03', 
+// 		updateTime: '2015-12-12 14:23:00', 
+// 		content: '假设这个字段是文章正文，我是正文正文'
+// 	},
+// 	{
+// 		id: 102, 
+// 		title: '这是第二篇文章', 
+// 		createTime: '2016-12-06 15:02:03', 
+// 		updateTime: '2016-12-12 14:23:00', 
+// 		content: '假设这个字段是文章正文，我是第二篇的正文正文正文正文正文正文'
+// 	},
+// 	{
+// 		id: 103, 
+// 		title: '这是第三篇文章', 
+// 		createTime: '2016-12-06 15:02:03', 
+// 		updateTime: '2016-12-12 14:23:00', 
+// 		content: '假设这个字段是文章正文，我是第三篇的正文正文正文正文正文正文'
+// 	}
+// ]
+
+// class ArticleBox extends React.Component{
 	// constructor(props){
 	// 	super(props);
 	// 	this.state = {
@@ -118,17 +154,16 @@ class ArticleBox extends React.Component{
 	// loader={loader}>
 	// 	<ArticleList articles={this.state.articles} />
 	// </InfiniteScroll>
-	render() {
-		const loader = <div>Loading</div>;
-		return (
-			<div className="page-group">
-        		<div className="page page-current">
+// 	render() {
+// 		const loader = <div>Loading</div>;
+// 		return (
+// 			<div className="page-group">
+//         		<div className="page page-current">
 					
-					<ArticleList articles={ARTICLES}/>
-				</div>
-			</div>
-		)
-	}
-}
+// 					<ArticleList articles={ARTICLES}/>
+// 				</div>
+// 			</div>
+// 		)
+// 	}
+// }
 
-export default ArticleBox
