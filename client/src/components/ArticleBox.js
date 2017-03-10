@@ -2,6 +2,7 @@ import React from "react"
 import {Link} from "react-router"
 import InfiniteScroll from './InfiniteScroll'
 import qwest from 'qwest'
+import api from '../api'
 
 // qwest.`method`(`url`, `data`, `options`, `before`)
 //      .then(function(xhr, response) {
@@ -25,7 +26,7 @@ class Article extends React.Component {
                                     {this.props.article.title}
                                 </p>
                                 <p className="color-gray">
-                                    发表于 {this.props.article.createTime}
+                                    发表于 {this.props.article.create_time}
                                 </p>
                             </div>
                         </div>
@@ -57,20 +58,13 @@ class ArticleBox extends React.Component{
 		}
 	}
 	componentWillMount() {
-		$.ajax({
-			url: '/article/list',
-			type: 'post',
-            datatype: 'json',
-            data:{
-            	page: 1
-            },
-            success: function (data) {
-                console.log(data.code)
-            },
-            error: function (xhr, status, err) {
-                $.toast(err);
-            }
-		})
+        api.getArticleList()
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 	}
 	render() {
 		const loader = <div>Loading</div>;

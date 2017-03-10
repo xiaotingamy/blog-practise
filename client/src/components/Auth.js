@@ -1,11 +1,11 @@
 module.exports = {
 	getToken() {
-		return window.localStorage.token
+		return localStorage.token
 	},
 	logout() {
-		delete window.localStorage.token
+		delete localStorage.token
 	},
 	loggedIn() {
-		return !!window.localStorage.token
+		return !!localStorage.token
 	}
 }

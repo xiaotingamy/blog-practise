@@ -2,29 +2,39 @@ import React from 'react'
 import {Route, Link} from 'react-router'
 import LoginForm from './LoginForm'
 import styles from '../static/css/login.css'
+import api from '../api'
 
 export default React.createClass( {
     contextTypes: {
         router: React.PropTypes.object
     },
     handleLoginSubmit(logindata) {
-        $.ajax({
-            url: '/user/login',
-            datatype: 'json',
-            type: 'post',
-            data: logindata,
-            success: function (data) {
-                if(data.error) {
-                    $.toast('用户名或密码错误！')
-                } else {
-                    window.localStorage.setItem('token',data.access_token);
-                    this.context.router.push('/');
-                }
-            }.bind(this),
-            error: function (xhr, status, err) {
-                $.toast(err);
-            }.bind(this)
+        // $.ajax({
+        //     url: '/user/login',
+        //     datatype: 'json',
+        //     type: 'post',
+        //     data: logindata,
+        //     success: function (data) {
+        //         if(data.code == 0) {
+        //             $.toast('用户名或密码错误！')
+        //         } else {
+        //             window.localStorage.setItem('token',data.access_token);
+        //             this.context.router.push('/');
+        //         }
+        //     }.bind(this),
+        //     error: function (xhr, status, err) {
+        //         $.toast(err);
+        //     }.bind(this)
+        // })
+        api.localLogin(logindata)
+        .then(function (response) {
+            console.log(response);
+            localStorage.setItem('token',response.data.access_token);
+            this.context.router.push('/');
         })
+        .catch(function (error) {
+            console.log(error);
+        });
     },
     render() {
         return (
