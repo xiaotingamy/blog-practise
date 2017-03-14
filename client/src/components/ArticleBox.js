@@ -62,9 +62,11 @@ class ArticleBox extends React.Component{
         api.getArticleList()
         .then(({data}) => {
             console.log(data);
-        	if(data.code && data.code == 0) {
-        		$.toast(data.message)
+        	if(data.code == 0) {
+        		alert(1);
+        		$.toast(response.message);
         	} else {
+        		alert(2);
         		self.setState({articles: data})
         	}
         })
