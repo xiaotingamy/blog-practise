@@ -15,6 +15,8 @@ module.exports = {
             },
             function(err,httpResponse,body){
                 res.json(JSON.parse(body));
+                console.log(body);
+                session.token = JSON.parse(body).access_token;
             }
         ).auth(client.client_id, client.client_secret, true);
     }
