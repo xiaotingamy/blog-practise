@@ -43,6 +43,9 @@
 .ps-r {
   position: relative;
 }
+.overflow-auto{
+  overflow: auto!important;
+}
 /*@media screen and (min-width: 64em) {
   .tracks {
     display: flex;
@@ -222,9 +225,9 @@
 .ptr-loading #app .ptr-element {
   transform: translate3d(0, 0, 0);
 }*/
-body:not(.ptr-loading) #app .ptr-element {
+/*body:not(.ptr-loading) #app .ptr-element {
   transform: translate3d(0, -50px, 0);
-}
+}*/
 /*
 .refresh-view{
   overflow: auto;

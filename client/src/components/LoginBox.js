@@ -18,7 +18,7 @@ export default React.createClass( {
         //         if(data.code == 0) {
         //             $.toast('用户名或密码错误！')
         //         } else {
-        //             window.localStorage.setItem('token',data.access_token);
+        //             localStorage.setItem('token',data.access_token);
         //             this.context.router.push('/');
         //         }
         //     }.bind(this),
@@ -26,11 +26,16 @@ export default React.createClass( {
         //         $.toast(err);
         //     }.bind(this)
         // })
+        var that = this;
         api.localLogin(logindata)
-        .then(function (response) {
-            console.log(response);
-            localStorage.setItem('token',response.data.access_token);
-            this.context.router.push('/');
+        .then(({data}) => {
+            console.log(data);
+            if (data.code == 0 ) {
+                $.toast(data.message)
+            } else {
+                localStorage.setItem('token',data.access_token);
+                that.context.router.push('/')
+            }
         })
         .catch(function (error) {
             console.log(error);

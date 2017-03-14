@@ -12,11 +12,11 @@ import ArticleDetail from './components/ArticleDetail'
 
 
 function requireAuth(nextState, replace) {
-  if (!auth.loggedIn()) {
-    replace({
-      pathname: '/login',
-    })
-  }
+	if (!auth.loggedIn()) {
+		replace({
+			pathname: '/login',
+		})
+	}
 }
 const Logout = React.createClass({
 	contextTypes: {

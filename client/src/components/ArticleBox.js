@@ -1,7 +1,7 @@
 import React from "react"
 import {Link} from "react-router"
-import InfiniteScroll from './InfiniteScroll'
-import qwest from 'qwest'
+// import InfiniteScroll from './InfiniteScroll'
+// import qwest from 'qwest'
 import api from '../api'
 
 // qwest.`method`(`url`, `data`, `options`, `before`)
@@ -18,7 +18,7 @@ import api from '../api'
 class Article extends React.Component {
 	render() {
 		return (
-				<Link to={'/article/detail/'+ this.props.article.id}>
+				<Link to={'/article/info/'+ this.props.article.id}>
                     <div className="card color-default">
                         <div className="card-content">
                             <div className="card-content-inner">
@@ -58,22 +58,26 @@ class ArticleBox extends React.Component{
 		}
 	}
 	componentWillMount() {
+		var self = this;
         api.getArticleList()
-        .then(function (response) {
-            console.log(response);
+        .then(({data}) => {
+            console.log(data);
+        	if(data.code && data.code == 0) {
+        		$.toast(data.message)
+        	} else {
+        		self.setState({articles: data})
+        	}
         })
         .catch(function (error) {
             console.log(error);
         });
 	}
 	render() {
-		const loader = <div>Loading</div>;
+		// const loader = <div>Loading</div>;
 		return (
-			<div className="page-group">
-        		<div className="page page-current">
+        		<div>
 					<ArticleList articles={this.state.articles}/>
 				</div>
-			</div>
 		)
 	}
 }
