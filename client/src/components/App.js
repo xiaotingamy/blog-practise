@@ -1,8 +1,16 @@
 import React from 'react'
-import {Link} from 'react-router'
+import {Link,browserHistory} from 'react-router'
 import auth from './Auth'
 
-export default React.createClass({
+class App extends React.Component {
+    constructor(props){
+        super(props);
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+    handleLogout(){
+        delete localStorage.token;
+        browserHistory.push('/login');
+    }
 	render() {
         return (
             <div className="page-group">
@@ -20,10 +28,11 @@ export default React.createClass({
                                 </Link>
                             </p>
                         </div>
-                        <p className="text-center"><Link className="a-link" to="/logout">退出登录</Link></p>
+                        <p className="text-center"><span className="a-link" onClick={this.handleLogout}>退出登录</span></p>
                     </div>
                 </div>
             </div>
         )
     }
-});
+}
+export default App 

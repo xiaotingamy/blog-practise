@@ -3,7 +3,7 @@ import {browserHistory} from "react-router"
 import api from '../api'
 
 
-class ArticleEditForm extends React.Component{
+class ArticleAddForm extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -13,23 +13,6 @@ class ArticleEditForm extends React.Component{
 		this.handleTitleChange = this.handleTitleChange.bind(this);
 		this.handleContentChange = this.handleContentChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-	componentWillMount(){
-		let { articleId } = this.props.params;
-		let self = this;
-		api.getOneArticle(articleId)
-		.then(({data}) => {
-			console.log(data);
-			self.setState({
-				title: data.title,
-				content: data.content
-			})
-		})
-		.catch((error) => {
-			// delete localStorage.token;
-   //  		browserHistory.push('/login');
-    		console.log(error.response.data)
-		})
 	}
 	handleTitleChange(e) {
 		this.setState({
@@ -57,19 +40,19 @@ class ArticleEditForm extends React.Component{
 			title: title,
 			content: content
 		}
-		// api.editArticle(data)
-		// .then((response) => {
-		// 	console.log(response);
-		// 	if (response.status == 200) {
-		// 		$.toast('提交成功');
-		// 		browserHistory.push('/article/list');
-		// 	}
-		// })
-		// .catch((error) => {
-		// 	delete localStorage.token;
-  //   		browserHistory.push('/login');
-  //   		console.log(error.response.data)
-		// })
+		api.createArticle(data)
+		.then((response) => {
+			console.log(response);
+			if (response.status == 200) {
+				$.toast('提交成功');
+				browserHistory.push('/article/list');
+			}
+		})
+		.catch((error) => {
+			delete localStorage.token;
+    		browserHistory.push('/login');
+    		console.log(error.response.data)
+		})
 	}
 	componentDidMount() {
 		var bodyHeight = document.body.clientHeight;
@@ -110,4 +93,4 @@ class ArticleEditForm extends React.Component{
 			)
 	}
 }
-export default ArticleEditForm
+export default ArticleAddForm

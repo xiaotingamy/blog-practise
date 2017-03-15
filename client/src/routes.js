@@ -8,6 +8,7 @@ import ForgetPassword from './components/ForgetPassword'
 import auth from './components/Auth'
 import ArticleBox from './components/ArticleBox'
 import ArticleEdit from './components/ArticleEdit'
+import ArticleAdd from './components/ArticleAdd'
 import ArticleDetail from './components/ArticleDetail'
 
 
@@ -18,28 +19,16 @@ function requireAuth(nextState, replace) {
 		})
 	}
 }
-const Logout = React.createClass({
-	contextTypes: {
-		router: React.PropTypes.object
-	},
-	componentDidMount() {
-		auth.logout();
-		this.context.router.push('/');
-	},
-	render() {
-		return (<div></div>)
-	}
-})
 
 var routes = (
 	<div>
 		<Route path="/" component={App} onEnter={requireAuth}></Route>
 		<Route path="/login" component={LoginBox}/>
-		<Route path="/logout" component={Logout}/>
 		<Route path="/register" component={RegisterBox}/>
 		<Route path="/forgetpwd" component={ForgetPassword}/>
 		<Route path="/article/list" component={ArticleBox} />
-		<Route path="/edit" component={ArticleEdit}/>
+		<Route path="/edit/:articleId" component={ArticleEdit}/>
+		<Route path="/add" component={ArticleAdd}/>
 		<Route path="/article/info/:articleId" component={ArticleDetail} />
     </div>
 );

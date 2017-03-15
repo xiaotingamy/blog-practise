@@ -9,7 +9,10 @@
 	background-repeat: no-repeat;
 	background-position: 50% 40%;
 }
-
+.page-white{
+  box-sizing: border-box;
+  background: #fff;
+}
 .index-btns {
 	margin: 8rem auto;
 	width: 70%;

@@ -1,5 +1,5 @@
 import React from "react"
-import {Link} from "react-router"
+import {Link, browserHistory} from "react-router"
 // import InfiniteScroll from './InfiniteScroll'
 // import qwest from 'qwest'
 import api from '../api'
@@ -43,7 +43,7 @@ class ArticleList extends React.Component {
 			items.push(<Article article={article} key={article.id}/>);
 		})
 		return (
-				<div className="list">
+				<div>
 					{items}
 				</div>
 			)
@@ -63,13 +63,26 @@ class ArticleBox extends React.Component{
         .then(({data}) => {
             console.log(data);
         	if(data.code == 0) {
+        		console.log(data)
         		$.toast(data.message);
         	} else {
         		self.setState({articles: data})
         	}
         })
         .catch(function (error) {
-            console.log(error);
+         	//if (error.response) {
+			// 	// The request was made, but the server responded with a status code
+			// 	// that falls out of the range of 2xx
+			// 	console.log(error.response.data);
+			// 	console.log(error.response.status);
+			// 	console.log(error.response.headers);
+			// } else {
+			// 	// Something happened in setting up the request that triggered an Error
+			// 	console.log('Error', error.message);
+			// }
+        	delete localStorage.token;
+    		browserHistory.push('/login');
+    		console.log(error.response.data)
         });
 	}
 	render() {

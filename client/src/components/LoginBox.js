@@ -1,13 +1,15 @@
 import React from 'react'
-import {Route, Link} from 'react-router'
+import {Route, Link, browserHistory} from 'react-router'
 import LoginForm from './LoginForm'
 import styles from '../static/css/login.css'
 import api from '../api'
 
-export default React.createClass( {
-    contextTypes: {
-        router: React.PropTypes.object
-    },
+
+class LoginBox extends React.Component{
+    constructor(props){
+        super(props);
+        this.handleLoginSubmit = this.handleLoginSubmit.bind(this)
+    }
     handleLoginSubmit(logindata) {
         // $.ajax({
         //     url: '/user/login',
@@ -26,7 +28,7 @@ export default React.createClass( {
         //         $.toast(err);
         //     }.bind(this)
         // })
-        var that = this;
+        var self = this;
         api.localLogin(logindata)
         .then(({data}) => {
             console.log(data);
@@ -34,13 +36,17 @@ export default React.createClass( {
                 $.toast(data.message)
             } else {
                 localStorage.setItem('token',data.access_token);
-                that.context.router.push('/')
+                // self.context.router.push('/')
+                browserHistory.push('/')
             }
         })
         .catch(function (error) {
             console.log(error);
+            if (error.response) {
+                $.toast(error.response.data.message)
+            }
         });
-    },
+    }
     render() {
         return (
             <div className="page-group page-current">
@@ -55,4 +61,5 @@ export default React.createClass( {
             </div>
         )
     }
-})
+}
+export default LoginBox

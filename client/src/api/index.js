@@ -30,8 +30,32 @@ export default {
     }))
   },
   // 文章列表
-  getArticleList(data){
-    return axios.get('/article/list?access_token='+localStorage.getItem('token'),data)
+  getArticleList(){
+    return axios.get('/article/list',{
+      params:{
+        access_token: localStorage.getItem('token')
+      }
+    })
+  },
+  getOneArticle(id){
+    return axios.get('/article/info',{
+      params:{
+        access_token: localStorage.getItem('token'),
+        id: id
+      }
+    })
+  },
+  // 创建文章
+  createArticle(params){
+    return axios.post('/article/add?access_token='+localStorage.getItem('token'),qs.stringify({
+      'user_id': 1,
+      'title':params.title,
+      'content':params.content 
+    }))
+  },
+  // 编辑一篇文章
+  editArticle(params){
+    return axios.post('/article/edit?access_token='+localStorage.getItem('token'),params)
   }
 }
 
