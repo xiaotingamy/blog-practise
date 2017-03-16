@@ -18,7 +18,7 @@ class App extends React.Component {
                     <div className="content">
                         <div className="content-block index-btns">
                             <p>
-                                <Link to="/edit" className="button button-big button-round button-white">
+                                <Link to="/add" className="button button-big button-round button-white">
                                     <span>写博客</span>
                                 </Link>
                             </p>

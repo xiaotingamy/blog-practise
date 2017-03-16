@@ -5,11 +5,19 @@ import api from '../api'
 class ArticleDetail extends React.Component{
 	constructor(props){
 		super(props);
+		this.handleToEdit = this.handleToEdit.bind(this);
 		this.state = {
 			title:'',
 			content:'',
 			update_time: ''
 		}
+	}
+	handleToEdit(e){
+		e.preventDefault();
+		let { articleId } = this.props.params;
+		let path = '/edit/'+articleId;
+		browserHistory.push(path);
+
 	}
 	componentWillMount(){
 		let { articleId } = this.props.params;
@@ -33,7 +41,7 @@ class ArticleDetail extends React.Component{
 		return (
 				<div className="page-white">
 					<div className="content-padded">
-						<h3>{this.state.title}<Link to="/edit"><i className="lnr lnr-pencil"></i></Link></h3>
+						<h3>{this.state.title}<a onClick={this.handleToEdit}><i className="lnr lnr-pencil"></i></a></h3>
 						<p className="time">{this.state.update_time}</p>
 						<p>{this.state.content}</p>
 					</div>

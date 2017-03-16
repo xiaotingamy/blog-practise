@@ -26,8 +26,8 @@ class ArticleEditForm extends React.Component{
 			})
 		})
 		.catch((error) => {
-			// delete localStorage.token;
-   //  		browserHistory.push('/login');
+			delete localStorage.token;
+    		browserHistory.push('/login');
     		console.log(error.response.data)
 		})
 	}
@@ -43,6 +43,7 @@ class ArticleEditForm extends React.Component{
 	}
 	handleSubmit(e){
 		e.preventDefault();
+		let { articleId } = this.props.params;
 		var title = this.state.title.trim();
 		var content = this.state.content.trim();
 
@@ -54,22 +55,23 @@ class ArticleEditForm extends React.Component{
 			return false;
 		}
 		var data = {
+			id: articleId,
 			title: title,
 			content: content
 		}
-		// api.editArticle(data)
-		// .then((response) => {
-		// 	console.log(response);
-		// 	if (response.status == 200) {
-		// 		$.toast('提交成功');
-		// 		browserHistory.push('/article/list');
-		// 	}
-		// })
-		// .catch((error) => {
-		// 	delete localStorage.token;
-  //   		browserHistory.push('/login');
-  //   		console.log(error.response.data)
-		// })
+		api.editArticle(data)
+		.then((response) => {
+			console.log(response);
+			if (response.status == 200) {
+				$.toast('提交成功');
+				browserHistory.push('/article/list');
+			}
+		})
+		.catch((error) => {
+			delete localStorage.token;
+    		browserHistory.push('/login');
+    		console.log(error.response.data)
+		})
 	}
 	componentDidMount() {
 		var bodyHeight = document.body.clientHeight;

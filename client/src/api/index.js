@@ -55,7 +55,12 @@ export default {
   },
   // 编辑一篇文章
   editArticle(params){
-    return axios.post('/article/edit?access_token='+localStorage.getItem('token'),params)
+    return axios.post('/article/edit?access_token='+localStorage.getItem('token'),qs.stringify({
+      'id': params.id,
+      'user_id': 1,
+      'title':params.title,
+      'content':params.content 
+    }))
   }
 }
 
